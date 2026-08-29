@@ -1,0 +1,12 @@
+---
+- name: Ansbile module for (setting up cron jobs remotely)
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Setup cron job
+      ansible.builtin.cron:
+        name: "My Cron Job"
+        minute: "0"
+        hour: "2"
+        job: "/usr/bin/my_script.sh"

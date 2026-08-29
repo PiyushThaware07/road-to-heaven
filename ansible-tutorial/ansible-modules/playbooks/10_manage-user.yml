@@ -1,0 +1,16 @@
+---
+- name: Ansbile module for (managing users)
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Create a new user
+      ansible.builtin.user:
+        name: john
+        state: present
+        groups: sudo
+      
+    - name: Delete an existing user
+      ansible.builtin.user:
+        name: james
+        state: absent

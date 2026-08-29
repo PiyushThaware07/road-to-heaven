@@ -1,0 +1,21 @@
+---
+- name: Ansbile module for (managing groups)
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Create a new group
+      ansible.builtin.group:
+        name: developers
+        state: present
+    
+    - name: Add ubuntu user to developers group
+      ansible.builtin.user:
+        name: john
+        groups: developers
+        append: true
+    
+    - name: delete an existing group
+      ansible.builtin.group:
+        name: producers
+        state: absent

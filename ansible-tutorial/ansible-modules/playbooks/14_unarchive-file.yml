@@ -1,0 +1,11 @@
+---
+- name: Ansbile module for (unarchiving files)
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Unarchive file
+      ansible.builtin.unarchive:
+        src: /tmp/file.tar.gz
+        dest: /tmp/
+        remote_src: yes
