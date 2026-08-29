@@ -1,0 +1,11 @@
+---
+- name: Ansbile module for (install packages)
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Install apache2 package
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: true

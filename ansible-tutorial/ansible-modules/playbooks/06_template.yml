@@ -1,0 +1,54 @@
+---
+- name: Configure Apache2
+  hosts: webservers
+  become: true
+
+  vars:
+    apache_port: 80
+    server_name: "netflix-app"
+    document_root: "/var/www/{{ server_name }}"
+
+  tasks:
+    - name: Install Apache2
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: true
+    
+    - name: Create website directory
+      ansible.builtin.file:
+        path: "{{ document_root }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: "0755"
+
+    - name: Deploy Apache configuration
+      ansible.builtin.template:
+        src: netflix.conf.j2
+        dest: /etc/apache2/sites-available/netflix.conf
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Enable Apache site
+      ansible.builtin.command:
+        cmd: a2ensite netflix.conf
+      notify: Restart Apache
+
+    - name: Disable default site
+      ansible.builtin.command:
+        cmd: a2dissite 000-default.conf
+      notify: Restart Apache
+
+    - name: Ensure Apache is running
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: apache2
+        state: restarted

@@ -1,0 +1,11 @@
+---
+- name: Ansbile module (to remote copy file)
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Copy inventory.ini to remote server
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ubuntu/myworkspace
+        mode: "0644"
