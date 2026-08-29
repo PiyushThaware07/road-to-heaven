@@ -1,14 +1,13 @@
 ---
-- name: Ansbile module for (execute shell expressions command on remote server)
+- name: Run shell commands
   hosts: webservers
-  become: true
-  
+
   tasks:
-    - name: Execute command on remote server
+
+    - name: Find nginx process
       ansible.builtin.shell:
-        cmd: df -h
-      register: my_command_output
-    
-    - name: Display command output
-      ansible.builtin.debug:
-        var: my_command_output.stdout
+        cmd: "ps aux | grep nginx"
+
+    - name: Check disk usage
+      ansible.builtin.shell:
+        cmd: "df -h | grep /dev"

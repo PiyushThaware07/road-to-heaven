@@ -1,11 +1,26 @@
 ---
-- name: Ansbile module for (install packages)
+- name: Manage packages
   hosts: webservers
   become: true
-  
+
   tasks:
-    - name: Install apache2 package
+
+    - name: Install nginx
       ansible.builtin.apt:
-        name: apache2
+        name: nginx
         state: present
         update_cache: true
+
+    - name: Remove apache2
+      ansible.builtin.apt:
+        name: apache2
+        state: absent
+
+    - name: Install multiple packages
+      ansible.builtin.apt:
+        name:
+          - git
+          - curl
+          - wget
+          - unzip
+        state: present

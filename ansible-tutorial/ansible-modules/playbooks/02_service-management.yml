@@ -1,11 +1,22 @@
 ---
-- name: Ansible module for (service management)
+- name: Manage nginx service
   hosts: webservers
   become: true
 
   tasks:
-    - name: Start and enable Apache2 service
+
+    - name: Start nginx
       ansible.builtin.service:
-        name: apache2
+        name: nginx
         state: started
         enabled: true
+
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+    - name: Stop nginx
+      ansible.builtin.service:
+        name: nginx
+        state: stopped

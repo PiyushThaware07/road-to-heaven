@@ -1,11 +1,15 @@
 ---
-- name: Ansbile module (to remote copy file)
+- name: Copy configuration
   hosts: webservers
   become: true
-  
+
   tasks:
-    - name: Copy inventory.ini to remote server
+
+    - name: Copy nginx configuration
       ansible.builtin.copy:
-        src: ./inventory.ini
-        dest: /home/ubuntu/myworkspace
-        mode: "0644"
+        src: ./files/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+        backup: true

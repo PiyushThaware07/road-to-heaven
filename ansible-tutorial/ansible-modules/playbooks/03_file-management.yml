@@ -1,26 +1,27 @@
 ---
-- name: Ansible module for (file management)
+- name: Create application directory
   hosts: webservers
   become: true
 
   tasks:
-    - name: create application directory
+
+    - name: Create directory
       ansible.builtin.file:
-        path: /tmp/netflix
+        path: /opt/myapp
         state: directory
+        owner: ubuntu
+        group: ubuntu
         mode: '0755'
 
-    - name: create an empty file
+    - name: Create file
       ansible.builtin.file:
-        path: /tmp/netflix/main.json
+        path: /opt/myapp/config.txt
         state: touch
-
-    - name: delete a file
-      ansible.builtin.file:
-        path: /tmp/test.json
-        state: absent
-
-    - name: change permission of a file
-      ansible.builtin.file:
-        path: /tmp/netflix/main.json
+        owner: ubuntu
+        group: ubuntu
         mode: '0644'
+
+    - name: Delete file
+      ansible.builtin.file:
+        path: /opt/myapp/config.txt
+        state: absent

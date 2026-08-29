@@ -1,10 +1,12 @@
 ---
-- name: Ansbile module (to remote fetch logs from the remote server)
+- name: Collect server logs
   hosts: webservers
   become: true
-  
+
   tasks:
-    - name: Fetch logs from remote server
+
+    - name: Fetch nginx access log
       ansible.builtin.fetch:
-        src: /home/ubuntu/myworkspace/inventory.ini
-        dest: /tmp
+        src: /var/log/nginx/access.log
+        dest: ./logs/
+        flat: false

@@ -1,14 +1,17 @@
 ---
-- name: Ansbile module for (execute command on remote server)
+- name: Run Linux commands
   hosts: webservers
-  become: true
-  
+
   tasks:
-    - name: Execute command on remote server
+
+    - name: Check uptime
       ansible.builtin.command:
-        cmd: "uptime"
-      register: my_command_output
-    
-    - name: Display command output
-      ansible.builtin.debug:
-        var: my_command_output.stdout
+        cmd: uptime
+
+    - name: Check kernel
+      ansible.builtin.command:
+        cmd: uname -r
+
+    - name: Check disk
+      ansible.builtin.command:
+        cmd: df -h
